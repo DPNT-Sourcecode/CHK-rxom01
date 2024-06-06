@@ -14,7 +14,12 @@ class SkuPricer:
         freebies: tuple[int, str] | None = None,
     ) -> None:
         self.prices = prices
-        self.freebies = freebies
+        if freebies:
+            self.freebie_qty = freebies[0]
+            self.freebie_item = freebies[1]
+        else:
+            self.freebie_qty = 0
+            self.freebie_item = ""
         self.total = 0
         self.free_items_available = []
 
@@ -26,8 +31,8 @@ class SkuPricer:
                 if discounted_qty <= qty
             )
             self.total += self.prices[largest_available_discounted_qty]
-            if self.freebies and qty >= self.freebies[0]:
-                self.free_items_available.append(self.freebies[1])
+            if qty >= self.freebie_qty:
+                self.free_items_available.append(self.freebie_item)
             qty -= largest_available_discounted_qty
             print(f"{largest_available_discounted_qty=}")
             print(f"{qty=}")
@@ -88,5 +93,6 @@ def pricer_for_item_and_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
