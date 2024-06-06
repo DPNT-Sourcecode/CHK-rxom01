@@ -15,7 +15,11 @@ PRICE_TABLE = {
 
 
 class SkuPrice:
-    def __init__(self, base_price: int, multiples_prices, dict[int, int] | None = None, multiple_freebies: dict[int, str]| None = None) -> None:
+    def __init__(self, base_price: int, multiples_prices, dict[int, int] | None = None, freebies: dict[int, str] | None = None) -> None:
+        self.base_price = base_price
+        self.multiples_prices = multiples_prices or {}
+        self.freebies = freebies or {}
+
 
 
 def checkout(skus: str) -> int:
@@ -55,6 +59,7 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
