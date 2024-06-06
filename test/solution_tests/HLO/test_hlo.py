@@ -9,5 +9,3 @@ class TestHlo:
 
     def test_includes_friend_name(self):
         assert hello_solution.hello("Bob") == "Hello, Bob!"
-
-
