@@ -35,7 +35,7 @@ PRICE_TABLE = {
     "B": SkuPricer({1: 30, 2: 45}),
     "C": SkuPricer({1: 20}),
     "D": SkuPricer({1: 15}),
-    "E": SkuPricer({1: 40}),
+    "E": SkuPricer({1: 40}, (2, "B")),
 }
 
 
@@ -52,9 +52,10 @@ def checkout(skus: str) -> int:
 
 def checkout_total(skus: str, price_table: dict) -> int:
     counts = sku_order_counts(skus).items()
-    return sum(
-        item_price_for_quantity(sku, qty, price_table).total for sku, qty in counts
-    )
+    pricers = [item_price_for_quantity(sku, qty, price_table) for sku, qty in counts]
+    free_items = []
+    for pricer in pricers:
+        free_items.extend(pricer.free_items_available)
 
 
 def item_price_for_quantity(
@@ -69,6 +70,7 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
