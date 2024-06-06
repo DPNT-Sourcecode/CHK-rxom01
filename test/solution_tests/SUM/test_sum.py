@@ -18,5 +18,3 @@ class TestSum:
             assert sum_solution.compute(0, 101) == 101
             assert sum_solution.compute(-1, 101) == 100
             assert sum_solution.compute(101, -1) == 100
-
-
