@@ -20,7 +20,7 @@ def checkout(skus: str) -> int:
         return ILLEGAL_INPUT
     try:
         counts = sku_order_counts(skus).items()
-        printcounts
+        print(counts)
         return sum(
             item_price_for_quantity(sku, qty, PRICE_TABLE) for sku, qty in counts
         )
@@ -49,6 +49,7 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 

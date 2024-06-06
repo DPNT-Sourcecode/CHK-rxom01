@@ -1,3 +1,4 @@
+import pytest
 from solutions.CHK import checkout_solution
 
 
@@ -18,7 +19,8 @@ class TestChk:
 
     def test_no_price_for_sku_returns_negative_one(self):
         price_table = {}
-        assert checkout_solution.item_price_for_quantity("A", 1, price_table) == -1
+        with pytest.raises(ValueError):
+            assert checkout_solution.item_price_for_quantity("A", 1, price_table) == -1
 
     def test_multiple_requested_for_sku_no_discount(self):
         price_table = {"A": {1: 1}}
@@ -38,6 +40,7 @@ class TestChk:
 
     def test_checkout_calculates_multiple_item_total(self):
         assert checkout_solution.checkout("AAAABBBCCD") == 180 + 75 + 40 + 15
+
 
 
 
