@@ -30,6 +30,10 @@ class TestChk:
         price_table = {"A": {1: 10, 2: 15}}
         assert checkout_solution.item_price_for_quantity("A", 3, price_table) == 25
 
+    def test_multiple_requested_for_sku_with_multiple_discount_levels(self):
+        price_table = {"A": {1: 10, 2: 18, 6: 48}}
+        assert checkout_solution.item_price_for_quantity("A", 9, price_table) == 76
+
     def test_checkout_counts_skus_orders(self):
         assert checkout_solution.sku_order_counts("ABABACZA") == {
             "A": 4,
@@ -42,4 +46,6 @@ class TestChk:
         assert checkout_solution.checkout("AAAABBBCCD") == 180 + 75 + 40 + 15
 
     def test_multiple_Es_gets_a_free_B(self):
-        assert False
+        price_table = {"E": {1: 40, 2: "B"}, "B": {1: 100}}
+        assert checkout_solution.item_price_for_quantity("EEB", 3, price_table) == 80
+
