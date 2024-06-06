@@ -23,14 +23,18 @@ class SkuPricer:
         self.total = 0
         self.free_items_available = []
 
-    def calculate_total(self, qty: int) -> None:
-        while qty > 0:
+    def calculate_outcome(self, qty: int) -> None:
+        remaining_qty = qty
+        while remaining_qty > 0:
             largest_available_discounted_qty = max(
                 discounted_qty
                 for discounted_qty in self.prices.keys()
-                if discounted_qty <= qty
+                if discounted_qty <= remaining_qty
             )
             self.total += self.prices[largest_available_discounted_qty]
+            remaining_qty -= largest_available_discounted_qty
+        if self.freebie_qty > 0:
+            self.free_items_available = [self.freebie_item] * (qty % self.freebie_qty)
 
 
 PRICE_TABLE = {
@@ -71,12 +75,13 @@ def pricer_for_item_and_quantity(
     pricer = price_table.get(sku)
     if not pricer:
         raise ValueError(f"no price info for sku {sku}")
-    pricer.calculate_total(qty)
+    pricer.calculate_outcome(qty)
     return pricer
 
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
