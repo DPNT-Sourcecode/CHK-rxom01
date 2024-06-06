@@ -14,8 +14,9 @@ class TestChk:
         assert chk.checkout("") == 0
 
     def test_price_calc_from_table(self):
-        pricer = chk.SkuPricer(1, {3: 25})
-        assert chk.item_price_for_quantity("A", 1, pricer) == 10
+        price_table = {"A": chk.SkuPricer(1, {3: 25})}
+        pricer = chk.item_price_for_quantity("A", 1, price_table)
+        assert pricer.total == 10
 
     # def test_no_price_for_sku_returns_negative_one(self):
     #     price_table = {}
@@ -52,7 +53,3 @@ class TestChk:
     # def test_multiple_Es_gets_a_free_B(self):
     #     price_table = {"E": {1: 40, 2: "B"}, "B": {1: 100}}
     #     assert chk.checkout_total("EE", price_table) == 80
-
-
-
-
