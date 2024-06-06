@@ -6,15 +6,6 @@ from collections import Counter
 ILLEGAL_INPUT: int = -1
 
 
-PRICE_TABLE = {
-    "A": {1: 50, 3: 130, 5: 200},
-    "B": {1: 30, 2: 45},
-    "C": {1: 20},
-    "D": {1: 15},
-    "E": {},
-}
-
-
 class SkuPricer:
     def __init__(
         self,
@@ -37,6 +28,15 @@ class SkuPricer:
             qty -= largest_available_discounted_qty
             if self.freebies and largest_available_discounted_qty >= self.freebies[0]:
                 self.free_items_available.append(self.freebies[1])
+
+
+PRICE_TABLE = {
+    "A": SkuPricer({1: 50, 3: 130, 5: 200}),
+    "B": SkuPricer({1: 30, 2: 45}),
+    "C": SkuPricer({1: 20}),
+    "D": SkuPricer({1: 15}),
+    "E": SkuPricer({1: 40}),
+}
 
 
 def checkout(skus: str) -> int:
@@ -69,6 +69,7 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
