@@ -68,7 +68,7 @@ def checkout(skus: str) -> int:
 def checkout_total(skus: str, price_table: dict) -> int:
     counts = sku_order_counts(skus)
     freebies = defaultdict(int)
-    for sku, qty in counts:
+    for sku, qty in counts.items():
         pricer = price_table.get(sku)
         if pricer:
             for sku, free_qty in pricer.freebies_for_qty(qty).items():
@@ -78,7 +78,7 @@ def checkout_total(skus: str, price_table: dict) -> int:
     for sku, total_free in freebies.items():
         counts[sku] = max(0, counts[sku] - total_free)
     total = 0
-    for sku, qty in counts:
+    for sku, qty in counts.items():
         pricer = price_table.get(sku)
         if pricer:
             total += pricer.total_for_qty(qty)
@@ -87,6 +87,7 @@ def checkout_total(skus: str, price_table: dict) -> int:
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
