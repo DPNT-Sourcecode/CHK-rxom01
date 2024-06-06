@@ -45,8 +45,13 @@ class TestChk:
     def test_checkout_calculates_multiple_item_total(self):
         assert checkout_solution.checkout("AAAABBBCCD") == 180 + 75 + 40 + 15
 
-    def test_multiple_Es_gets_a_free_B(self):
+    def test_multiple_Es_gets_a_free_B_when_ordered(self):
         price_table = {"E": {1: 40, 2: "B"}, "B": {1: 100}}
         assert checkout_solution.checkout_total("EEB", price_table) == 80
+
+    def test_multiple_Es_gets_a_free_B(self):
+        price_table = {"E": {1: 40, 2: "B"}, "B": {1: 100}}
+        assert checkout_solution.checkout_total("EE", price_table) == 80
+
 
 

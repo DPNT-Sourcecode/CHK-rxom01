@@ -26,9 +26,7 @@ def checkout(skus: str) -> int:
 
 def checkout_total(skus: str, price_table: dict) -> int:
     counts = sku_order_counts(skus).items()
-    return sum(
-        item_price_for_quantity(sku, qty, price_table) for sku, qty in counts.items()
-    )
+    return sum(item_price_for_quantity(sku, qty, price_table) for sku, qty in counts)
 
 
 def item_price_for_quantity(
@@ -52,4 +50,5 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
