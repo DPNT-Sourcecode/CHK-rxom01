@@ -34,7 +34,9 @@ class SkuPricer:
             self.total += self.prices[largest_available_discounted_qty]
             remaining_qty -= largest_available_discounted_qty
         if self.freebie_qty > 0:
-            self.free_items_available = [self.freebie_item] * (qty % self.freebie_qty)
+            item_qty = qty // self.freebie_qty
+            items = [self.freebie_item] * item_qty
+            self.free_items_available = items
 
     def __repr__(self) -> str:
         return f"prices: {self.prices}, freebies: {self.freebie_item} * {self.freebie_qty}, total:{self.total}, free_items: {self.free_items_available}"
@@ -68,6 +70,10 @@ def checkout_total(skus: str, price_table: dict) -> int:
     ]
     total = sum(pricer.total for pricer in pricers)
 
+    free_items = itertools.chain.from_iterable(
+        [pricer.free_items_available for pricer in pricers]
+    )
+
     return total
 
 
@@ -79,12 +85,12 @@ def pricer_for_item_and_quantity(
     if not pricer:
         raise ValueError(f"no price info for sku {sku}")
     pricer.calculate_outcome(qty)
-    print(pricer)
     return pricer
 
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
