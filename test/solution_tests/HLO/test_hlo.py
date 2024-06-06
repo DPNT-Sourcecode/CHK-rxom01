@@ -7,6 +7,7 @@ class TestHlo:
         with pytest.raises(AssertionError):
             assert hello_solution.hello(123) == "Hello 123"
 
-    def test_ignores_friend_name(self):
-        assert hello_solution.hello("Bob") == "Hello, World!"
+    def test_includes_friend_name(self):
+        assert hello_solution.hello("Bob") == "Hello, Bob!"
+
 
