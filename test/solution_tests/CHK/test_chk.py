@@ -61,3 +61,9 @@ class TestChk:
             "B": chk.SkuPricer({1: 100}),
         }
         assert chk.checkout_total("EE", price_table) == 80
+
+    def test_bogof(self):
+        pricer = chk.SkuPricer({1: 10}, (2, "F"))
+        price_table = {"F": pricer}
+        assert chk.checkout_total("FFF", price_table) == 20
+
