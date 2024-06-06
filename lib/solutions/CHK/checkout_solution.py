@@ -5,6 +5,7 @@ from collections import Counter
 
 ILLEGAL_INPUT: int = -1
 
+
 PRICE_TABLE = {
     "A": {1: 50, 3: 130, 5: 200},
     "B": {1: 30, 2: 45},
@@ -14,7 +15,7 @@ PRICE_TABLE = {
 }
 
 
-class SkuPrice:
+class SkuPricer:
     def __init__(
         self,
         base_price: int,
@@ -24,6 +25,11 @@ class SkuPrice:
         self.base_price = base_price
         self.multiples_prices = multiples_prices or {}
         self.freebies = freebies or {}
+        self.total = 0
+        self.free_items_available = {}
+
+    def calculate(self, qty: int) -> None:
+        return
 
 
 def checkout(skus: str) -> int:
@@ -63,6 +69,7 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
