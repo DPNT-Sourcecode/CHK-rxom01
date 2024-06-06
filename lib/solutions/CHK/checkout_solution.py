@@ -1,5 +1,5 @@
 import itertools
-from collections import Counter
+from collections import Counter, defaultdict
 
 # noinspection PyUnusedLocal
 # skus = unicode string
@@ -68,8 +68,14 @@ def checkout(skus: str) -> int:
 
 def checkout_total(skus: str, price_table: dict) -> int:
     counts = sku_order_counts(skus)
-    pricers = {sku: price_table.get(sku) for sku in counts.keys()}
-    total = sum(pricer.total_for_qty(counts[sku]) for sku, pricer in pricers.items())
+    freebies = defaultdict(int)
+    for sku, qty in counts:
+        pricer = price_table.get(sku)
+        if pricer:
+            for sku, free_qty in pricer.freebies_for_qty(qty).items():
+                freebies[sku] += free_qty
+        else:
+            raise KeyError(f"no pricer for {sku=}")
 
     free_items = itertools.chain.from_iterable(
         [pricer.free_items_available for pricer in pricers]
@@ -99,5 +105,6 @@ def pricer_for_item_and_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
