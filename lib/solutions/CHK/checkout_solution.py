@@ -36,6 +36,9 @@ class SkuPricer:
         if self.freebie_qty > 0:
             self.free_items_available = [self.freebie_item] * (qty % self.freebie_qty)
 
+    def __repr__(self) -> str:
+        return f"prices: {self.prices}, freebies: {self.freebie_item} * {self.freebie_qty}, total:{self.total}, free_items: {self.free_items_available}"
+
 
 PRICE_TABLE = {
     "A": SkuPricer({1: 50, 3: 130, 5: 200}),
@@ -76,11 +79,13 @@ def pricer_for_item_and_quantity(
     if not pricer:
         raise ValueError(f"no price info for sku {sku}")
     pricer.calculate_outcome(qty)
+    print(pricer)
     return pricer
 
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
