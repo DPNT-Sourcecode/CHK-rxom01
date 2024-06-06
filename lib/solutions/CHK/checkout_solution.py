@@ -60,8 +60,12 @@ def checkout_total(skus: str, price_table: dict) -> int:
     all_free_items = [pricer.free_items_available for pricer in pricers]
     free_items = itertools.chain.from_iterable(all_free_items)
     freebie_counts = Counter(free_items)
+    discount_amount = 0
     for sku, free_qty in freebie_counts.items():
         ordered = max(0, counts.get(sku, 0) - free_qty)
+        recalc_pricer = price_table[sku].calculate_outcome(ordered)
+        discount_amount += recalc_pricer.total
+    return total - discount_amount
 
 
 def item_price_for_quantity(
@@ -76,12 +80,3 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
-
-
-
-
-
-
-
-
-
