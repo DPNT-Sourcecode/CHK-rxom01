@@ -79,7 +79,8 @@ def checkout_total(skus: str, price_table: dict) -> int:
     free_item_counts = Counter(free_items)
 
     for sku, free_qty in free_item_counts.items():
-        deductible = max(0, counts[sku] - free_qty)
+        ordered = counts[sku]
+        deductible = min(free_qty, ordered)
         deduction_pricer = pricer_for_item_and_quantity(sku, deductible, price_table)
         deduction = deduction_pricer.total
         total -= deduction
@@ -99,5 +100,6 @@ def pricer_for_item_and_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
