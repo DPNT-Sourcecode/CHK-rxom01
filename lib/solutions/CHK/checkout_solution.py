@@ -6,20 +6,24 @@ from collections import Counter
 ILLEGAL_INPUT: int = -1
 
 PRICE_TABLE = {
-    "A": {1: 50, 3: 130. 5: 200},
+    "A": {1: 50, 3: 130, 5: 200},
     "B": {1: 30, 2: 45},
     "C": {1: 20},
     "D": {1: 15},
-    "E": {}
+    "E": {},
 }
 
 
 class SkuPrice:
-    def __init__(self, base_price: int, multiples_prices, dict[int, int] | None = None, freebies: dict[int, str] | None = None) -> None:
+    def __init__(
+        self,
+        base_price: int,
+        multiples_prices: dict[int, int] | None = None,
+        freebies: dict[int, str] | None = None,
+    ) -> None:
         self.base_price = base_price
         self.multiples_prices = multiples_prices or {}
         self.freebies = freebies or {}
-
 
 
 def checkout(skus: str) -> int:
@@ -59,6 +63,7 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
