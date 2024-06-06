@@ -41,6 +41,5 @@ class TestChk:
     def test_checkout_calculates_multiple_item_total(self):
         assert checkout_solution.checkout("AAAABBBCCD") == 180 + 75 + 40 + 15
 
-
-
-
+    def test_multiple_Es_gets_a_free_B(self):
+        assert False
