@@ -28,3 +28,12 @@ class TestChk:
         price_table = {"A": {1: 10, 2: 15}}
         assert checkout_solution.item_price_for_quantity("A", 3, price_table) == 25
 
+    def test_checkout_counts_skus_orders(self):
+        assert checkout_solution.sku_order_counts("ABABACZA") == {
+            "A": 4,
+            "B": 2,
+            "C": 1,
+            "Z": 1,
+        }
+
+

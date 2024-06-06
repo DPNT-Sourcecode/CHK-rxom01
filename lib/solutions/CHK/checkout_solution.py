@@ -24,9 +24,14 @@ def item_price_for_quantity(
         largest_available_discounted_qty = max(
             discountable_qty
             for discountable_qty in prices.keys()
-            if discountable_qty <= qty
+            if discountable_qty <= (qty - qty_priced)
         )
         total += prices[largest_available_discounted_qty]
         qty_priced += largest_available_discounted_qty
     return total
+
+
+def sku_order_counts(skus: str) -> dict[str, int]:
+    return {}
+
 
