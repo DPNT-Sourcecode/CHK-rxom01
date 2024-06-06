@@ -5,6 +5,13 @@ from collections import Counter
 
 ILLEGAL_INPUT: int = -1
 
+PRICE_TABLE = {
+    "A": {1: 50, 3: 130},
+    "B": {1: 30, 2: 45},
+    "C": {1: 20},
+    "D": {1: 15},
+}
+
 
 def checkout(skus: str) -> int:
     if not isinstance(skus, str):
@@ -12,9 +19,10 @@ def checkout(skus: str) -> int:
     if not all(c.isalpha() for c in skus):
         return ILLEGAL_INPUT
     try:
+        counts = sku_order_counts(skus).items()
+        printcounts
         return sum(
-            item_price_for_quantity(sku, qty, PRICE_TABLE)
-            for sku, qty in sku_order_counts(skus).items()
+            item_price_for_quantity(sku, qty, PRICE_TABLE) for sku, qty in counts
         )
     except ValueError:
         return -1
@@ -25,7 +33,7 @@ def item_price_for_quantity(
 ) -> int:
     prices = price_table.get(sku, {})
     if not prices:
-        return ValueError(f"no price table for sku {sku}")
+        raise ValueError(f"no price table for sku {sku}")
     qty_priced = 0
     total = 0
     while qty_priced < qty:
@@ -41,6 +49,7 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
