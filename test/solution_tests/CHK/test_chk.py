@@ -13,6 +13,9 @@ class TestChk:
     def test_empty_string_returns_zero(self):
         assert chk.checkout("") == 0
 
+    def test_lowercase_alpha_accepted(self):
+        assert chk.checkout("aaaB") == 160
+
     def test_price_calc_from_table(self):
         pricer = chk.SkuPricer({1: 10, 3: 25})
         assert pricer.total_for_qty(1) == 10
@@ -58,6 +61,7 @@ class TestChk:
             "B": chk.SkuPricer({1: 100}),
         }
         assert chk.checkout_total("EE", price_table) == 80
+
 
 
 

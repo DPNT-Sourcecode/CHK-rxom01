@@ -59,6 +59,7 @@ def checkout(skus: str) -> int:
         return ILLEGAL_INPUT
     if not all(c.isalpha() for c in skus):
         return ILLEGAL_INPUT
+    skus = skus.upper()
     try:
         return checkout_total(skus, PRICE_TABLE)
     except ValueError:
@@ -87,6 +88,7 @@ def checkout_total(skus: str, price_table: dict) -> int:
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
