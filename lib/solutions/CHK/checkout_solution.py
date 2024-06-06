@@ -12,3 +12,10 @@ def checkout(skus: str) -> int:
     return 0
 
 
+def item_price_for_quantity(
+    sku: str, qty: int, price_table: dict[str, dict[int:int]]
+) -> int:
+    return 0
+
+
+

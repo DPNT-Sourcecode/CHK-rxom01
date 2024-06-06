@@ -13,3 +13,8 @@ class TestChk:
     def test_empty_string_returns_zero(self):
         assert checkout_solution.checkout("") == 0
 
+    def test_price_calc_from_table(self):
+        price_table = {"A": {1: 10, 3: 25}}
+        assert checkout_solution.item_price_for_quantity("A", 1, price_table) == 10
+
+
