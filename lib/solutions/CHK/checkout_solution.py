@@ -1,3 +1,5 @@
+from collections import Counter
+
 # noinspection PyUnusedLocal
 # skus = unicode string
 
@@ -9,7 +11,13 @@ def checkout(skus: str) -> int:
         return ILLEGAL_INPUT
     if not all(c.isalpha() for c in skus):
         return ILLEGAL_INPUT
-    return 0
+    try:
+        return sum(
+            item_price_for_quantity(sku, qty, PRICE_TABLE)
+            for sku, qty in sku_order_counts(skus).items()
+        )
+    except ValueError:
+        return -1
 
 
 def item_price_for_quantity(
@@ -17,7 +25,7 @@ def item_price_for_quantity(
 ) -> int:
     prices = price_table.get(sku, {})
     if not prices:
-        return -1
+        return ValueError(f"no price table for sku {sku}")
     qty_priced = 0
     total = 0
     while qty_priced < qty:
@@ -32,6 +40,7 @@ def item_price_for_quantity(
 
 
 def sku_order_counts(skus: str) -> dict[str, int]:
-    return {}
+    return Counter(skus)
+
 
 
