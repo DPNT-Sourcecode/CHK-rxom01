@@ -47,5 +47,6 @@ class TestChk:
 
     def test_multiple_Es_gets_a_free_B(self):
         price_table = {"E": {1: 40, 2: "B"}, "B": {1: 100}}
-        assert checkout_solution.item_price_for_quantity("EEB", 3, price_table) == 80
+        assert checkout_solution.checkout_total("EEB", price_table) == 80
+
 

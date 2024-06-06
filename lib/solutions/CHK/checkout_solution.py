@@ -19,13 +19,16 @@ def checkout(skus: str) -> int:
     if not all(c.isalpha() for c in skus):
         return ILLEGAL_INPUT
     try:
-        counts = sku_order_counts(skus).items()
-        print(counts)
-        return sum(
-            item_price_for_quantity(sku, qty, PRICE_TABLE) for sku, qty in counts
-        )
+        return checkout_total(skus, PRICE_TABLE)
     except ValueError:
         return -1
+
+
+def checkout_total(skus: str, price_table: dict) -> int:
+    counts = sku_order_counts(skus).items()
+    return sum(
+        item_price_for_quantity(sku, qty, price_table) for sku, qty in counts.items()
+    )
 
 
 def item_price_for_quantity(
@@ -49,3 +52,4 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
