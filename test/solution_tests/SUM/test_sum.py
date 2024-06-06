@@ -11,5 +11,12 @@ class TestSum:
             assert sum_solution.compute(1.1, 0.9) == 2
 
     def test_raises_if_out_of_range(self):
-        assert sum_solution.compute(-1, 0) == -1
+        with pytest.raises(AssertionError):
+            assert sum_solution.compute(-1, 0) == -1
+            assert sum_solution.compute(101, 0) == 101
+            assert sum_solution.compute(0, -1) == -1
+            assert sum_solution.compute(0, 101) == 101
+            assert sum_solution.compute(-1, 101) == 100
+            assert sum_solution.compute(101, -1) == 100
+
 
