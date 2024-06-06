@@ -13,9 +13,13 @@ def checkout(skus: str) -> int:
 
 
 def item_price_for_quantity(
-    sku: str, qty: int, price_table: dict[str, dict[int:int]]
+    sku: str, qty: int, price_table: dict[str, dict[int, int]]
 ) -> int:
-    return 0
+    prices = price_table.get(sku, {})
+    if not prices:
+        return -1
+    return qty * prices[qty]
+
 
 
 

@@ -17,4 +17,9 @@ class TestChk:
         price_table = {"A": {1: 10, 3: 25}}
         assert checkout_solution.item_price_for_quantity("A", 1, price_table) == 10
 
+    def test_no_price_for_sku_returns_negative_one(self):
+        price_table = {}
+        assert checkout_solution.item_price_for_quantity("A", 1, price_table) == -1
+
+
 
