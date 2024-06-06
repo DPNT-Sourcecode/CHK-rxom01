@@ -1,4 +1,3 @@
-import pytest
 from solutions.CHK import checkout_solution
 
 
@@ -28,3 +27,4 @@ class TestChk:
     def test_multiple_requested_for_sku_with_discount(self):
         price_table = {"A": {1: 10, 2: 15}}
         assert checkout_solution.item_price_for_quantity("A", 3, price_table) == 25
+

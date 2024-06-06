@@ -18,4 +18,15 @@ def item_price_for_quantity(
     prices = price_table.get(sku, {})
     if not prices:
         return -1
-    return qty * prices[1]
+    qty_priced = 0
+    total = 0
+    while qty_priced < qty:
+        largest_available_discounted_qty = max(
+            discountable_qty
+            for discountable_qty in prices.keys()
+            if discountable_qty <= qty
+        )
+        total += prices[largest_available_discounted_qty]
+        qty_priced += largest_available_discounted_qty
+    return total
+
