@@ -1,4 +1,3 @@
-import itertools
 from collections import Counter, defaultdict
 
 # noinspection PyUnusedLocal
@@ -10,13 +9,17 @@ ILLEGAL_INPUT: int = -1
 class SkuPricer:
     def __init__(
         self,
+        sku: str,
         prices: dict[int, int],
         freebies: tuple[int, str] | None = None,
     ) -> None:
+        self.sku = sku
         self.prices = prices
         if freebies:
             self.freebie_qty = freebies[0]
             self.freebie_item = freebies[1]
+            if self.freebie_item == self.sku:
+                self.freebie_qty += 1
         else:
             self.freebie_qty = 0
             self.freebie_item = ""
@@ -46,12 +49,35 @@ class SkuPricer:
 
 
 PRICE_TABLE = {
-    "A": SkuPricer({1: 50, 3: 130, 5: 200}),
-    "B": SkuPricer({1: 30, 2: 45}),
-    "C": SkuPricer({1: 20}),
-    "D": SkuPricer({1: 15}),
-    "E": SkuPricer({1: 40}, (2, "B")),
-    "F": SkuPricer({1: 10}, (3, "F")),
+    pricer.sku: pricer
+    for pricer in [
+        SkuPricer("A", {1: 50, 3: 130, 5: 200}),
+        SkuPricer("B", {1: 30, 2: 45}),
+        SkuPricer("C", {1: 20}),
+        SkuPricer("D", {1: 15}),
+        SkuPricer("E", {1: 40}, (2, "B")),
+        SkuPricer("F", {1: 10}, (2, "F")),
+        SkuPricer("G", {1: 20}),
+        SkuPricer("H", {1: 10, 5: 45, 10: 80}),
+        SkuPricer("I", {1: 35}),
+        SkuPricer("J", {1: 60}),
+        SkuPricer("K", {1: 80, 3: 150}),
+        SkuPricer("L", {1: 90}),
+        SkuPricer("M", {1: 15}),
+        SkuPricer("N", {1: 40}, (3, "M")),
+        SkuPricer("O", {1: 10}),
+        SkuPricer("P", {1: 50, 5: 200}),
+        SkuPricer("Q", {1: 30, 3: 80}),
+        SkuPricer("R", {1: 50}, (3, "Q")),
+        SkuPricer("S", {1: 30}),
+        SkuPricer("T", {1: 20}),
+        SkuPricer("U", {1: 40}, (3, "U")),
+        SkuPricer("V", {1: 50}),
+        SkuPricer("W", {1: 20}),
+        SkuPricer("X", {1: 90}),
+        SkuPricer("Y", {1: 10}),
+        SkuPricer("Z", {1: 50}),
+    ]
 }
 
 
@@ -90,5 +116,6 @@ def checkout_total(skus: str, price_table: dict) -> int:
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
