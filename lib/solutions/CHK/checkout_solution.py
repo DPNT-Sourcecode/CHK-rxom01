@@ -72,7 +72,7 @@ PRICE_TABLE = {
         SkuPricer("S", {1: 30}),
         SkuPricer("T", {1: 20}),
         SkuPricer("U", {1: 40}, (3, "U")),
-        SkuPricer("V", {1: 50}),
+        SkuPricer("V", {1: 50, 2: 90, 3: 130}),
         SkuPricer("W", {1: 20}),
         SkuPricer("X", {1: 90}),
         SkuPricer("Y", {1: 10}),
@@ -116,3 +116,4 @@ def checkout_total(skus: str, price_table: dict) -> int:
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
