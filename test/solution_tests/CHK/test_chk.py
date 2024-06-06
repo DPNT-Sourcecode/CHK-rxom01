@@ -15,26 +15,26 @@ class TestChk:
 
     def test_price_calc_from_table(self):
         price_table = {"A": chk.SkuPricer({1: 10, 3: 25})}
-        pricer = chk.item_price_for_quantity("A", 1, price_table)
+        pricer = chk.pricer_for_item_and_quantity("A", 1, price_table)
         assert pricer.total == 10
 
     def test_no_price_for_sku_returns_negative_one(self):
         price_table = {}
         with pytest.raises(ValueError):
-            assert chk.item_price_for_quantity("A", 1, price_table) == -1
+            assert chk.pricer_for_item_and_quantity("A", 1, price_table) == -1
 
     def test_multiple_requested_for_sku_no_discount(self):
         price_table = {"A": chk.SkuPricer({1: 1})}
-        pricer = chk.item_price_for_quantity("A", 5, price_table)
+        pricer = chk.pricer_for_item_and_quantity("A", 5, price_table)
         assert pricer.total == 5
 
     def test_multiple_requested_for_sku_with_discount(self):
         price_table = {"A": chk.SkuPricer({1: 10, 2: 15})}
-        assert chk.item_price_for_quantity("A", 3, price_table).total == 25
+        assert chk.pricer_for_item_and_quantity("A", 3, price_table).total == 25
 
     def test_multiple_requested_for_sku_with_multiple_discount_levels(self):
         price_table = {"A": chk.SkuPricer({1: 10, 2: 18, 6: 48})}
-        assert chk.item_price_for_quantity("A", 9, price_table).total == 76
+        assert chk.pricer_for_item_and_quantity("A", 9, price_table).total == 76
 
     def test_checkout_counts_skus_orders(self):
         assert chk.sku_order_counts("ABABACZA") == {
@@ -63,4 +63,5 @@ class TestChk:
     # def test_multiple_Es_gets_a_free_B(self):
     #     price_table = {"E": {1: 40, 2: "B"}, "B": {1: 100}}
     #     assert chk.checkout_total("EE", price_table) == 80
+
 

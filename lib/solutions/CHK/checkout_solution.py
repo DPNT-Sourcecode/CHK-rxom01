@@ -26,13 +26,13 @@ class SkuPricer:
                 if discounted_qty <= qty
             )
             self.total += self.prices[largest_available_discounted_qty]
-            qty -= largest_available_discounted_qty
             if self.freebies and qty >= self.freebies[0]:
                 self.free_items_available.append(self.freebies[1])
-            # print(f"{largest_available_discounted_qty=}")
-            # print(f"{qty=}")
-            # print(f"{self.total=}")
-            # print(f"{self.free_items_available=}")
+            qty -= largest_available_discounted_qty
+            print(f"{largest_available_discounted_qty=}")
+            print(f"{qty=}")
+            print(f"{self.total=}")
+            print(f"{self.free_items_available=}")
 
 
 PRICE_TABLE = {
@@ -63,6 +63,7 @@ def checkout_total(skus: str, price_table: dict) -> int:
     ]
     total = sum(pricer.total for pricer in pricers)
     all_free_items = [pricer.free_items_available for pricer in pricers]
+    print(f"{all_free_items=}")
     free_items = itertools.chain.from_iterable(all_free_items)
     freebie_counts = Counter(free_items)
     discount_amount = 0
@@ -77,6 +78,7 @@ def checkout_total(skus: str, price_table: dict) -> int:
 def pricer_for_item_and_quantity(
     sku: str, qty: int, price_table: dict[str, SkuPricer]
 ) -> SkuPricer:
+    print(f"{sku=}")
     pricer = price_table.get(sku)
     if not pricer:
         raise ValueError(f"no price info for sku {sku}")
@@ -86,4 +88,5 @@ def pricer_for_item_and_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
