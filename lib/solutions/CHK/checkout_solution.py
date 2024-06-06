@@ -72,23 +72,15 @@ def checkout_total(skus: str, price_table: dict) -> int:
     ]
     total = sum(pricer.total for pricer in pricers)
 
-    print(f"{total=}")
-
     free_items = itertools.chain.from_iterable(
         [pricer.free_items_available for pricer in pricers]
     )
 
     free_item_counts = Counter(free_items)
 
-    print(free_item_counts.items())
-
     for sku, free_qty in free_item_counts.items():
-        print(f"{sku=}, {free_qty=}")
         deduction_pricer = pricer_for_item_and_quantity(sku, free_qty, price_table)
-        deduction_pricer.calculate_outcome(free_qty)
-        print(deduction_pricer)
         deduction = deduction_pricer.total
-        print(f"{sku=}, {free_qty=}, {deduction=}")
         total -= deduction
 
     return total
@@ -97,9 +89,7 @@ def checkout_total(skus: str, price_table: dict) -> int:
 def pricer_for_item_and_quantity(
     sku: str, qty: int, price_table: dict[str, SkuPricer]
 ) -> SkuPricer:
-    print(f"{sku=}")
     pricer = price_table.get(sku)
-    print(pricer)
     if not pricer:
         raise ValueError(f"no price info for sku {sku}")
     pricer.calculate_outcome(qty)
@@ -108,3 +98,4 @@ def pricer_for_item_and_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
