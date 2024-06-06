@@ -18,19 +18,23 @@ PRICE_TABLE = {
 class SkuPricer:
     def __init__(
         self,
-        base_price: int,
-        multiples_prices: dict[int, int] | None = None,
-        freebies: dict[int, str] | None = None,
+        prices: dict[int, int],
+        freebies: tuple[int, str] | None = None,
     ) -> None:
-        self.base_price = base_price
-        self.multiples_prices = multiples_prices or {}
-        self.freebies = freebies or {}
+        self.multiples_prices = prices
+        self.freebies = freebies
         self.total = 0
         self.free_items_available = {}
 
     def calculate_outcome(self, qty: int) -> None:
-        return
-
+        qty_priced = 0
+        while qty > 0:
+            largest_available_discounted_qty = max(
+                discounted_qty for discounted_qty in self.multiples_prices.keys()
+            )
+            self.total += self.prices[largest_available_discounted_qty]
+            qty -= largest_available_discounted_qty
+            if
 
 def checkout(skus: str) -> int:
     if not isinstance(skus, str):
@@ -60,3 +64,4 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
