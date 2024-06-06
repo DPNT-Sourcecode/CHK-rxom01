@@ -74,6 +74,13 @@ def checkout_total(skus: str, price_table: dict) -> int:
         [pricer.free_items_available for pricer in pricers]
     )
 
+    free_item_counts = Counter(free_items)
+
+    print(free_item_counts.items())
+
+    for sku, free_qty in free_item_counts.items():
+        total -= pricer_for_item_and_quantity(sku, free_qty, price_table).total
+
     return total
 
 
@@ -90,6 +97,7 @@ def pricer_for_item_and_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
