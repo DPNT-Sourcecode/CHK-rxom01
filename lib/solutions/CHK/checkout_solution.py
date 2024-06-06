@@ -24,6 +24,8 @@ class SkuPricer:
         self.free_items_available = []
 
     def calculate_outcome(self, qty: int) -> None:
+        self.total = 0
+        self.free_items_available = []
         remaining_qty = qty
         while remaining_qty > 0:
             largest_available_discounted_qty = max(
@@ -81,7 +83,11 @@ def checkout_total(skus: str, price_table: dict) -> int:
     print(free_item_counts.items())
 
     for sku, free_qty in free_item_counts.items():
-        deduction = pricer_for_item_and_quantity(sku, free_qty, price_table).total
+        print(f"{sku=}, {free_qty=}")
+        deduction_pricer = pricer_for_item_and_quantity(sku, free_qty, price_table)
+        deduction_pricer.calculate_outcome(free_qty)
+        print(deduction_pricer)
+        deduction = deduction_pricer.total
         print(f"{sku=}, {free_qty=}, {deduction=}")
         total -= deduction
 
@@ -102,12 +108,3 @@ def pricer_for_item_and_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
-
-
-
-
-
-
-
-
-
