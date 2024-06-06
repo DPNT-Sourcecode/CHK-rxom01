@@ -18,8 +18,4 @@ def item_price_for_quantity(
     prices = price_table.get(sku, {})
     if not prices:
         return -1
-    return qty * prices[qty]
-
-
-
-
+    return qty * prices[1]
