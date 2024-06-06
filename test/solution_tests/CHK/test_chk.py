@@ -22,8 +22,8 @@ class TestChk:
         assert pricer.total_for_qty(5) == 5
 
     def test_multiple_requested_for_sku_with_discount(self):
-        price_table = {"A": chk.SkuPricer({1: 10, 2: 15})}
-        assert chk.pricer_for_item_and_quantity("A", 3, price_table).total == 25
+        pricer = chk.SkuPricer({1: 10, 2: 15})
+        assert pricer.total_for_qty(3) == 25
 
     def test_multiple_requested_for_sku_with_multiple_discount_levels(self):
         pricer = chk.SkuPricer({1: 10, 2: 18, 6: 48})
@@ -58,5 +58,6 @@ class TestChk:
             "B": chk.SkuPricer({1: 100}),
         }
         assert chk.checkout_total("EE", price_table) == 80
+
 
 
