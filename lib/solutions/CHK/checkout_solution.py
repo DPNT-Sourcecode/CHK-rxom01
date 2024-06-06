@@ -49,10 +49,10 @@ def checkout_total(skus: str, price_table: dict) -> int:
 
 
 def item_price_for_quantity(
-    sku: str, qty: int, price_table: dict[str, dict[int, int]]
+    sku: str, qty: int, price_table: dict[str, SkuPricer]
 ) -> int:
-    prices = price_table.get(sku, {})
-    if not prices:
+    pricer = price_table.get(sku, SkuPricer())
+    if not pricer:
         raise ValueError(f"no price table for sku {sku}")
     qty_priced = 0
     total = 0
@@ -69,6 +69,7 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
