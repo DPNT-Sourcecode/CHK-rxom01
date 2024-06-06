@@ -1,3 +1,4 @@
+import itertools
 from collections import Counter
 
 # noinspection PyUnusedLocal
@@ -70,6 +71,7 @@ def item_price_for_quantity(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
