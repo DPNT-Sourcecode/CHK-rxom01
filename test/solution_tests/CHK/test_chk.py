@@ -60,6 +60,10 @@ class TestChk:
         pricer.calculate_outcome(3)
         assert pricer.free_items_available == ["B"]
 
-    # def test_multiple_Es_gets_a_free_B(self):
-    #     price_table = {"E": {1: 40, 2: "B"}, "B": {1: 100}}
-    #     assert chk.checkout_total("EE", price_table) == 80
+    def test_multiple_Es_gets_a_free_B(self):
+        price_table = {
+            "E": chk.SkuPricer({1: 40}, (2, "B")),
+            "B": chk.SkuPricer({1: 100}),
+        }
+        assert chk.checkout_total("EE", price_table) == 80
+
