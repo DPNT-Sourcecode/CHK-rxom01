@@ -38,8 +38,7 @@ class SkuPricer:
         free_items_available: dict[str, int] = {}
         if self.freebie_qty > 0:
             item_qty = qty // self.freebie_qty
-            items = [self.freebie_item] * item_qty
-            free_items_available = items
+            free_items_available[self.freebie_item] = item_qty
         return free_items_available
 
     def __repr__(self) -> str:
@@ -81,22 +80,14 @@ def checkout_total(skus: str, price_table: dict) -> int:
     total = 0
     for sku, qty in counts:
         pricer = price_table.get(sku)
-        total += pricer.total_for_qty(qty)
+        if pricer:
+            total += pricer.total_for_qty(qty)
     return total
-
-
-def pricer_for_item_and_quantity(
-    sku: str, qty: int, price_table: dict[str, SkuPricer]
-) -> SkuPricer:
-    pricer = price_table.get(sku)
-    if not pricer:
-        raise ValueError(f"no price info for sku {sku}")
-    pricer.calculate_outcome(qty)
-    return pricer
 
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
