@@ -80,6 +80,13 @@ PRICE_TABLE = {
     ]
 }
 
+class ComboPricer:
+    def __init__(self, pricers: list[SkuPricer], skus: str, qty: int, price: int):
+        self.pricers =
+        self.qty = qty
+        self.price = price
+
+
 
 def checkout(skus: str) -> int:
     if not isinstance(skus, str):
@@ -94,7 +101,7 @@ def checkout(skus: str) -> int:
         return -1
 
 
-def checkout_total(skus: str, price_table: dict) -> int:
+def checkout_total(skus: str, price_table: dict, combo: ComboPricer | None = NOne) -> int:
     counts = sku_order_counts(skus)
     freebies = defaultdict(int)
     for sku, qty in counts.items():
@@ -116,3 +123,4 @@ def checkout_total(skus: str, price_table: dict) -> int:
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
