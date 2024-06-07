@@ -84,13 +84,16 @@ PRICE_TABLE = {
 class ComboPricer:
     def __init__(self, pricers: list[SkuPricer], skus: str, qty: int, price: int):
         self.pricers = [pricer for pricer in pricers if pricer.sku in skus]
-        self.qty = qty
-        self.price = price
-        self.total = 0
+        self.qty: int = qty
+        self.price: int = price
+        self.total: int = 0
         self.priced_items: dict[str, int] = {}
 
     def calculate(self, skus: str) -> None:
         return
+
+
+COMBO_PRICER = ComboPricer(list(PRICE_TABLE.values()), "STXYZ", 3, 45)
 
 
 def checkout(skus: str) -> int:
@@ -114,6 +117,8 @@ def checkout_total(
     if combo:
         combo.calculate(skus)
         total += combo.total
+        for sku, priced_qty in combo.priced_items.items():
+            counts[sku] -= priced_qty
     freebies = defaultdict(int)
     for sku, qty in counts.items():
         pricer = price_table.get(sku)
@@ -133,5 +138,6 @@ def checkout_total(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
