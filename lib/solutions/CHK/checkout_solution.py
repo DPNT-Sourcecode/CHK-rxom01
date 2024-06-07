@@ -80,12 +80,17 @@ PRICE_TABLE = {
     ]
 }
 
+
 class ComboPricer:
     def __init__(self, pricers: list[SkuPricer], skus: str, qty: int, price: int):
-        self.pricers =
+        self.pricers = [pricer for pricer in pricers if pricer.sku in skus]
         self.qty = qty
         self.price = price
+        self.total = 0
+        self.priced_items: dict[str, int] = {}
 
+    def calculate(self, skus: str) -> None:
+        return
 
 
 def checkout(skus: str) -> int:
@@ -101,8 +106,14 @@ def checkout(skus: str) -> int:
         return -1
 
 
-def checkout_total(skus: str, price_table: dict, combo: ComboPricer | None = NOne) -> int:
+def checkout_total(
+    skus: str, price_table: dict, combo: ComboPricer | None = None
+) -> int:
     counts = sku_order_counts(skus)
+    total = 0
+    if combo:
+        combo.calculate(skus)
+        total += combo.total
     freebies = defaultdict(int)
     for sku, qty in counts.items():
         pricer = price_table.get(sku)
@@ -113,7 +124,6 @@ def checkout_total(skus: str, price_table: dict, combo: ComboPricer | None = NOn
             raise KeyError(f"no pricer for {sku=}")
     for sku, total_free in freebies.items():
         counts[sku] = max(0, counts[sku] - total_free)
-    total = 0
     for sku, qty in counts.items():
         pricer = price_table.get(sku)
         if pricer:
@@ -123,4 +133,5 @@ def checkout_total(skus: str, price_table: dict, combo: ComboPricer | None = NOn
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
