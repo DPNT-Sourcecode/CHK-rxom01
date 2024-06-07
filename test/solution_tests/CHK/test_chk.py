@@ -78,5 +78,3 @@ class TestChk:
         }
         combo = chk.ComboPricer(pricers.values(), "AB", 2, 18)
         assert chk.checkout_total("AAABB", pricers, combo) == 46
-
-
