@@ -1,4 +1,5 @@
 from collections import Counter, defaultdict
+from typing import Iterable
 
 # noinspection PyUnusedLocal
 # skus = unicode string
@@ -44,9 +45,6 @@ class SkuPricer:
             free_items_available[self.freebie_item] = item_qty
         return free_items_available
 
-    def __repr__(self) -> str:
-        return f"prices: {self.prices}, freebies: {self.freebie_item} * {self.freebie_qty}, total:{self.total}, free_items: {self.free_items_available}"
-
 
 PRICE_TABLE = {
     pricer.sku: pricer
@@ -82,7 +80,7 @@ PRICE_TABLE = {
 
 
 class ComboPricer:
-    def __init__(self, pricers: list[SkuPricer], skus: str, qty: int, price: int):
+    def __init__(self, pricers: Iterable[SkuPricer], skus: str, qty: int, price: int):
         self.pricers = [pricer for pricer in pricers if pricer.sku in skus]
         self.qty: int = qty
         self.price: int = price
@@ -93,7 +91,7 @@ class ComboPricer:
         return
 
 
-COMBO_PRICER = ComboPricer(list(PRICE_TABLE.values()), "STXYZ", 3, 45)
+COMBO_PRICER = ComboPricer(PRICE_TABLE.values(), "STXYZ", 3, 45)
 
 
 def checkout(skus: str) -> int:
@@ -138,6 +136,7 @@ def checkout_total(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
