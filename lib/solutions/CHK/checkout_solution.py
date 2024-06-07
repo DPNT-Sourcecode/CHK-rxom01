@@ -81,14 +81,16 @@ PRICE_TABLE = {
 
 class ComboPricer:
     def __init__(self, pricers: Iterable[SkuPricer], skus: str, qty: int, price: int):
-        self.pricers = [pricer for pricer in pricers if pricer.sku in skus]
+        self.pricers = {pricer.sku: pricer for pricer in pricers if pricer.sku in skus}
+        self.skus = skus
         self.qty: int = qty
         self.price: int = price
         self.total: int = 0
         self.priced_items: dict[str, int] = {}
 
     def calculate(self, skus: str) -> None:
-        return
+        combo_skus = [sku for sku in skus if sku in self.skus]
+        counts = Counter(combo_skus)
 
 
 COMBO_PRICER = ComboPricer(PRICE_TABLE.values(), "STXYZ", 3, 45)
@@ -136,6 +138,7 @@ def checkout_total(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
