@@ -91,7 +91,10 @@ class ComboPricer:
     def calculate(self, skus: str) -> None:
         combo_skus = [sku for sku in skus if sku in self.skus]
         combo_skus.sort(key=lambda sku: self.pricers[sku].prices[1], reverse=True)
-        self.total = self.price * (len(combo_skus) // self.qty)
+        combos_in_list = len(combo_skus) // self.qty
+        self.total = self.price * combos_in_list
+        combo_skus = combo_skus[: combos_in_list * self.qty]
+        self.priced_items = Counter(combo_skus)
 
 
 COMBO_PRICER = ComboPricer(PRICE_TABLE.values(), "STXYZ", 3, 45)
@@ -139,6 +142,7 @@ def checkout_total(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+
 
 
 
