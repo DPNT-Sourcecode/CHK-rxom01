@@ -66,3 +66,9 @@ class TestChk:
         pricer = chk.SkuPricer("F", {1: 10}, (2, "F"))
         price_table = {"F": pricer}
         assert chk.checkout_total("FFF", price_table) == 20
+
+    def test_combo(self):
+        pricers = [
+            chk.SkuPricer("A", {1: 10}),
+        ]
+
