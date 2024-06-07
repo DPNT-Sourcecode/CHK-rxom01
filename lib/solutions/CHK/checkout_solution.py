@@ -108,7 +108,7 @@ def checkout(skus: str) -> int:
     if not skus.upper() == skus:
         return -1
     try:
-        return checkout_total(skus, PRICE_TABLE)
+        return checkout_total(skus, PRICE_TABLE, COMBO_PRICER)
     except KeyError:
         return -1
 
@@ -142,3 +142,4 @@ def checkout_total(
 
 def sku_order_counts(skus: str) -> dict[str, int]:
     return Counter(skus)
+

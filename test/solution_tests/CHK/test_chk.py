@@ -65,6 +65,7 @@ class TestChk:
     def test_bogof(self):
         pricer = chk.SkuPricer("F", {1: 10}, (2, "F"))
         price_table = {"F": pricer}
+
         assert chk.checkout_total("FFF", price_table) == 20
 
     def test_combo(self):
@@ -78,3 +79,10 @@ class TestChk:
         }
         combo = chk.ComboPricer(pricers.values(), "AB", 2, 18)
         assert chk.checkout_total("AAABB", pricers, combo) == 46
+
+    def test_failed_deploy_case(self):
+        combo = chk.ComboPricer(chk.PRICE_TABLE.values(), "STXYZ", 3, 45)
+        assert chk.checkout_total("STX", chk.PRICE_TABLE, combo) == 45
+        assert chk.checkout_total("STXSTX", chk.PRICE_TABLE, combo) == 90
+        assert chk.checkout_total("SSS", chk.PRICE_TABLE, combo) == 45
+
